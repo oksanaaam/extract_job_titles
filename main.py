@@ -9,7 +9,7 @@ output_csv_path = "results.csv"
 
 df = pd.read_csv(input_csv_path)
 
-filtered_df = df[df["JOB_TITLE"].apply(lambda title: isinstance(title, str) and len(title) > 12)]
+filtered_df = df[df["JOB_TITLE"].apply(lambda title: isinstance(title, str) and len(title) > 20)]
 
 df_subset = filtered_df.head(100).copy()
 
