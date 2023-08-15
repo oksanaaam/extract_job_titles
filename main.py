@@ -1,6 +1,6 @@
 import openai
 import pandas as pd
-import random
+import html
 
 openai.api_key = "YOUR_OPENAI_API_KEY"
 
@@ -9,8 +9,9 @@ output_csv_path = "results.csv"
 
 df = pd.read_csv(input_csv_path)
 
-random_subset = random.sample(range(len(df)), 100)
-df_subset = df.loc[random_subset].copy()
+filtered_df = df[df["JOB_TITLE"].apply(lambda title: isinstance(title, str) and len(title) > 12)]
+
+df_subset = filtered_df.head(100).copy()
 
 job_titles = df_subset["JOB_TITLE"]
 
@@ -19,7 +20,7 @@ cleaned_titles = []
 for title in job_titles:
     response = openai.Completion.create(
         engine="text-davinci-003",
-        prompt=f"Please extract just the core job title from: '{title}'.",
+        prompt=f"Please extract just the core job title from: '{html.escape(title)}'.",
         max_tokens=50
     )
     cleaned_title = response.choices[0].text.strip()
