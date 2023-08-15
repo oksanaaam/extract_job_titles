@@ -11,7 +11,7 @@ df = pd.read_csv(input_csv_path)
 
 filtered_df = df[df["JOB_TITLE"].apply(lambda title: isinstance(title, str) and len(title) > 20)]
 
-df_subset = filtered_df.head(100).copy()
+df_subset = filtered_df.head(1000).copy()
 
 job_titles = df_subset["JOB_TITLE"]
 
